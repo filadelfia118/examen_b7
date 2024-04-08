@@ -47,7 +47,20 @@
               <td>{{$task->id}}</td>
               <td>{{$task->title}}</td>
               <td>{{$task->description}}</td>
-              <td class="@if ($task->completed == 'Yes') completed @endif">{{$task->completed}}</td>
+                <td>
+                    <form action="{{route('tasks.store') }}" method="post" >
+                        @csrf
+                        <div class="mb-3">
+                            <label for="completed">Completed:</label>
+                            <select class="form-control" id="completed" name="completed"   required>
+                                <option value="" disabled selected>Selectează o opțiune:</option>
+                                <option value="No" style="color: red">No</option>
+                                <option value="Yes" style="color: green">Yes</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-sm">Salveaza</button>
+                    </form>
+                </td>
               <td>
                 <a href="{{route('tasks.show', ['task'=> $task->id]) }}" class="btn btn-info btn-sm">Show</a>
                 {{-- <form action="{{route('tasks.destroy',['task'=>$task]) }}" method="post">

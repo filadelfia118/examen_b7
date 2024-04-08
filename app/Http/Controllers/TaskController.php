@@ -31,14 +31,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title'=>'required',
-            'description'=>'required',
-            'completed'=>'required'
-        ]);
-        
+        // $validated = $request->validate([
+        //     'title'=>'required',
+        //     'description'=>'required',
+        //     'completed'=>'required'
+        // ]);
+        $task = new Task();
+        $task->title = $request->title;
+        $task->description = $request->description;
+        $task->completed=$request->completed;
+        $task->save();
 
-        Task::create($request->all());
+        //Task::create($request->all());
         return redirect()->back();
     }
 
@@ -74,12 +78,4 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->back();
     }
-    public function toggleCompletion($id)
-{
-    $task = Task::find($id);
-    $task->completed = !$task->completed;
-    $task->save();
-
-    return response()->json(['message' => 'Status updated successfully']);
-}
 }
